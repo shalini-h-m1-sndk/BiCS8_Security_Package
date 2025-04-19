@@ -1,0 +1,400 @@
+"""
+################################################################################
+# Copyright (c) SanDisk Corp.2022 - All rights reserved.This code, and all
+# derivative work, is the exclusive property of SanDisk and may not be used
+# without SanDisk's authorization.
+#
+# SCRIPTER PARENT SCRIPT         : None
+# SCRIPTER SCRIPT                : None
+# CTF CALL ALL SCRIPT            : None
+# CTF SCRIPT                     : None
+# CVF CALL ALL SCRIPT            : None
+# CVF SCRIPT                     : generic_log_msg.py
+# DESCRIPTION                    : This is the utility file for having generic log messages
+# PRERQUISTE                     : None
+# STANDALONE EXECUTION           : No. It is an utility script
+# TEST ARGUMENTS                 : None
+# AUTHOR                         : Arockiaraj JAI
+# UPDATED BY                     : Sivagurunathan
+# REVIEWED BY                    : None
+# DATE                           : 11-Nov-2022
+################################################################################
+"""
+
+# Python future modules for python3 forward compatibility
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+from future import standard_library
+standard_library.install_aliases()
+import sys
+if sys.version_info.major >= 3:
+    from builtins import *
+    from builtins import object
+
+# Global Variables
+
+
+# Generic Log Message  Class - Begins
+class gen_log_msg(object):
+
+    GL_ACMD51_FUNC_ENTRY_EXIT = "ACMD51 - SCR Register"
+    GL_CMD48_FUNC_ENTRY_EXIT = "CMD48 - Extension Register Read"
+    GL_CMD49_FUNC_ENTRY_EXIT = "CMD49 - Extension Register Write"
+
+    ################### GENERIC_LOG_MESSAGE DICTIONARY - BEGINS ##############################
+    GL_CHECKING = "Checking : %s"
+    GL_BUFFER_NOT_EQUAL = "Read buffer is not equal to written buffer"
+    GL_DATA_VALIDATED = "Data validated successfully"
+    GL_WRITE_AND_READ_DATA_VERIFIED = "Write and read data compared"
+    GL_CHECK_IF_CARD_IN_TRANS_STATE = GL_CHECKING % "Card is in tran state"
+    GL_CARD_IN_TRANS_STATE = "Card is in trans state"
+    GL_CARD_NOT_IN_TRANS_STATE = "Card is not in trans state"
+    GL_CARD_NOT_MOVED_TO_TRANS_STATE = "Card has not moved to Trans state"
+    GL_CARD_IN_BUSY_STATE = "Card is in busy state"
+    GL_CARD_OUT_OF_BUSY_STATE = "Card is out of busy state"
+    GL_CARD_NOT_OUT_OF_BUSY_STATE = "Card is not out of busy state"
+    GL_CARD_NOT_IN_BUSY_STATE = "Card is not in busy state"
+    GL_BUSY_TIMEOUT_FOR_DISCARD = "Busy timeout occured for discard"
+    GL_DISCARD_NOT_SUPPORTED_TEST_IS_INVALID_FOR_THIS_CARD = "Since card does not support CMD38(Discard), This testcase is not suitable for this card"
+    GL_DISCARD_NOT_SUPPORTED_REMOVE_FROM_CQ_SUPPORT_LIST = "Card does not support CMD38(Discard), Removing 'Discard' from the CQ supported command list"
+    GL_REINIT_CARD = "Reinitializing the card"
+    GL_INIT_DONE = "Card initialization done"
+    GL_BLANK_LINE = "\n"
+    GL_SWITCH_TO_SDR12 = "Switch to SDR12 Speed"
+    GL_SWITCH_TO_SDR25 = "Switch to SDR25 speed"
+    GL_SWITCH_TO_SDR50 = "Switch to SDR50 speed"
+    GL_SWITCH_TO_DDR50 = "Switch to DDR50 speed"
+    GL_SEND_CMD19 = "Sending CMD19(Send tuning block)"
+    GL_SOFT_RESET = "CMD0 - Soft reset"
+    GL_DO_POWER_CYCLE = "Doing power cycle"
+    GL_DO_POWER_ON = "Doing power on"
+    GL_DO_POWER_OFF = "Doing power off"
+    GL_POW_ON_AFTER_POW_OFF_ABORT = "Power on the card after power off abort"
+    GL_POWER_LOSS_ITER_HIT = "Power loss iteration hit"
+    GL_WRITE_1GB = "Writing 1GB"
+    GL_FINISHED_WRITE_1GB = "Finished writing 1GB"
+    GL_READ_32MB = "Reading 32MB"
+    GL_FINISHED_READ_32MB = "Finished reading 32MB"
+    GL_WRITE_FULL_CARD_IN_DDR50 = "Writing the full card in DDR50 mode"
+    GL_READ_FULL_CARD_IN_SDR104 = "Reading the full card in SDR104 mode"
+    GL_FULL_CARD_WRITE = "Started full card write"
+    GL_FULL_CARD_READ = "Started full card read"
+    GL_FINISHED_FULL_CARD_WRITE = "Finished full card write"
+    GL_FINISHED_FULL_CARD_READ = "Finished full card read"
+    GL_FULL_CARD_WRITE_READ_FINISHED = "Finished writing and reading the full card"
+    GL_STOP_TRANS_COMPLETED = "Stop transmission completed successfully......\n"
+    GL_POWER_ABORT_COMPLETED = "Power abort completed successfully......\n"
+    GL_CMD0_ABORT_COMPLETED = "CMD0 abort completed successfully......\n"
+    GL_VALIDATE_WRITTEN_DATA = "Validating the written data\n"
+    GL_WRITE_BUFFER = "Write Data Buffer"
+    GL_READ_BUFFER = "Read Data Buffer"
+    ################### GENERIC_LOG_MESSAGE DICTIONARY - ENDS ##############################
+
+    #################### WRITE/READ - BEGINS ####################
+    GL_INPUT_IS_ZERO_OR_EMPTY = "One of the inputs is either 0 or empty"
+    GL_NUMBLOCKS_IS_GREATER_THAN_0xFFFF = "NumBlocks is greater than '0xFFFF'"
+    GL_MISCOMPARE_OCCURED = "Miscompare error occured"
+    GL_PRECONDITION_LEGACY_WRITE = "Precondition - with legacy write"
+    GL_VERIFY_CQ_WRITE_WITH_LEGACY_READ = "Verifying CQ write data with legacy read"
+    GL_COMPARE_WRITE_READ_DATA = "Comparing the write and read data"
+    GL_LEGACY_CMD18_EXE = "Legacy command (CMD18) execution"
+    GL_DATA_WRITTERN = "Data written successfully"
+    #################### WRITE/READ - ENDS ####################
+
+    #################### CARD SWITCH COMMAND - BEGINS ####################
+    GL_CMD6_FOR_CHECK_FUNC = "Sending CMD6 with check function mode"
+    #################### CARD SWITCH COMMAND - ENDS ####################
+
+    #################### ERASE - BEGINS ####################
+    GL_CHECK_FULE_SUPPORT = GL_CHECKING % "Support for FULE"
+    GL_FULE_SUPPORTED = "Card supports FULE"
+    GL_FULE_WHOLE_CARD = "Erasing whole card with FULE(Full User Logical Area)"
+    GL_ERASED_BLOCK_VERIFIED = "Erased block data verified. Blocks erased successfully"
+    #################### ERASE - ENDS ####################
+
+    #################### WRITE PROTECTION - BEGINS ####################
+    GL_ENABLE_TWP = "Enabling temporary write protection"
+    GL_DISABLE_TWP = "Disabling temporary write protection"
+    GL_PERM_WR_PROTECT_DISABLED = "PERMANANT_WRITE_PROTECT bit is disabled. Card is removed from write protected mode"
+    GL_TEMP_WR_PROTECT_DISABLED = "TEMPORARY_WRITE_PROTECT bit is disabled. Card is removed from write protected mode"
+    GL_PERM_WR_PROTECT_ENABLED = "PERMANANT_WRITE_PROTECT bit is enabled. Card is put to write protected mode"
+    GL_TEMP_WR_PROTECT_ENABLED = "TEMPORARY_WRITE_PROTECT bit is enabled. Card is put to write protected mode"
+    #################### WRITE PROTECTION - ENDS ####################
+
+    #################### EXCEPTION - BEGINS ####################
+    GL_CARD_ILLEGAL_CMD = "Card is reporting illegal command"
+    GL_EXPECT_CARD_ILLEGAL_CMD = "Expected Error: CARD_ILLEGAL_CMD is occured"
+    GL_CARD_OUT_OF_RANGE = "Card is reporting out of range"
+    GL_EXPECT_CARD_OUT_OF_RANGE = "Expected Error: CARD_OUT_OF_RANGE is occured"
+    #################### EXCEPTION - ENDS ####################
+
+
+    #################### REGISTERS - BEGINS ####################
+    GL_READ_SCR_REG = "Reading SCR register"
+    GL_READ_SD_REG_TO_CHECK_CQ_SUPPORT = "Reading SD status register to check CQ support"
+    GL_CQ_SUPPORTED_AS_PER_SD_REG = "CQ is supported as per SD status register"
+    GL_CQ_NOT_SUPPORTED_AS_PER_SD_REG = "CQ is not supported as per SD status register"
+    #################### REGISTERS - ENDS ####################
+
+    #################### EXTENSION REGISTER - BEGINS ####################
+    GL_CHECK_EXTN_REG_CMDS_SUPPORT_IN_SCR = GL_CHECKING % "Extension register commands support in SCR register"
+    GL_CHECK_CMD48_CMD49_SUPPORT_IN_SCR = GL_CHECKING % "Support of CMD48 and CMD49 in SCR register"
+    GL_CMD48_CMD49_SUPPORTED = "Extension register commands CMD48 and CMD49 are supported"
+    GL_CMD48_CMD49_NOT_SUPPORTED = "Extension register commands CMD48 and CMD49 are not supported"
+    GL_READ_GEN_INFO_FUNC_IN_EXT_REG = "Reading general information function in extension register"
+    GL_READ_PERF_ENHANCE_FUNC_IN_EXT_REG = "Reading performance enhancement function in extension register"
+    GL_PERF_ENHANCE_FUNC_SUPPORTED = "Performance enhancement function is supported"
+    GL_PERF_ENHANCE_FUNC_NOT_SUPPORTED = "Performance enhancement function is not supported"
+    GL_CHECK_POW_MANAGE_SUPPORT = GL_CHECKING % "Support of power management function"
+    GL_POW_MANAGE_FUNC_SUPPORTED = "Power management function is supported"
+    GL_POW_MANAGE_FUNC_NOT_SUPPORTED = "Power management function is not supported"
+    GL_POW_OFF_NOTIFY = "Sending power off notification...."
+    GL_READ_POW_MANAGE_FUNC_IN_EXT_REG = "Reading power management function in extension register"
+    GL_EXT_REG_WRITE_READ_NOT_EQUAL = "Extension register read data(by CMD48) is not equal with written data(by CMD49)"
+    GL_COMPARE_EXT_REG_WRITE_READ_DATA = "Comparing CMD49 data buffer with CMD48 read back"
+    GL_ERROR_BIT_NOT_SET_FOR_CMD49 = "ERROR bit not set in CMD13(Card Status Register) for CMD49"
+    GL_ERROR_BIT_SET_FOR_CMD49_WHEN_CQ_ENABLED_WITHOUT_CACHE = "ERROR bit set in CMD13(Card Status Register) for CMD49 when CQ is enabled without cache"
+    #################### EXTENSION REGISTER - ENDS ####################
+
+    #################### CQ - BEGINS ####################
+    GL_CHECK_CQ_SUPPORT = GL_CHECKING % "CQ support"
+    GL_EITHER_ONE_OF_OR_BOTH_CMD_CLASSES_1_AND_11_NOT_SUPPORTED = "Either one of or both command classes 1 and 11 are not supported\n"
+    GL_CQ_NOT_SUPPORTED_AS_QUEUE_DEPTH_IS_0 = "CQ is not supported as queue depth is 0"
+    GL_CQ_DEPTH_32_CAN_NOT_VALIDATE_THIS_CASE = "CQ depth is 32... Can not validate this case"
+    GL_CQ_SUPPORTED = "CQ is supported by card"
+    GL_CQ_NOT_SUPPORTED = "CQ is not supported by card"
+    GL_CMD58_CMD59_NOT_SUPPORTED = "CMD58 and CMD59 are not supported... Cannot continue..."
+    GL_SEND_CQ_CMDS = "Sending CQ commands..."
+    GL_CHECK_CQ_ENABLED = GL_CHECKING % "CQ is enabled"
+    GL_CHECK_CQ_NOT_ENABLED = GL_CHECKING % "CQ is not enabled"
+    GL_CQ_ENABLED = "CQ is enabled"
+    GL_CQ_NOT_ENABLED = "CQ is not enabled"
+    GL_CQ_NOT_ENABLED_UNABLE_TO_TEST_CQ_CMDS = "CQ is not enabled. Unable to test CQ commands"
+    GL_UNABLE_TO_TEST_CQ_CMDS = "Unable to test CQ commands"
+    GL_CHECK_CQ_DISABLED = GL_CHECKING % "CQ is disabled"
+    GL_CHECK_CQ_AND_CACHE_ENABLED = GL_CHECKING % "CQ and cache are enabled"
+    GL_CHECK_CQ_AND_CACHE_DISABLED = GL_CHECKING % "CQ and cache are disabled"
+    GL_CQ_DISABLED = "CQ is disabled"
+    GL_CQ_NOT_DISABLED = "CQ is not disabled"
+    GL_CACHE_SUPPORTED = "Cache is supported by card"
+    GL_CACHE_NOT_SUPPORTED = "Cache is not supported by card"
+    GL_CACHE_IS_ENABLED = "Cache is enabled"
+    GL_CACHE_IS_DISABLED = "Cache is disabled"
+    GL_ENABLE_CQ_AND_CACHE = "Enabling CQ and cache"
+    GL_DISABLE_CQ_AND_CACHE = "Disabling CQ and cache"
+    GL_DISABLE_CQ = "Disabling CQ"
+    GL_ENABLE_CACHE = "Enabling cache"
+    GL_DISABLE_CACHE = "Disabling cache"
+    GL_CACHE_FLUSHED = "Cache flushed successfully"
+    GL_CACHE_NOT_FLUSHED = "Cache couldn't be flushed within 1 second"
+    GL_SEQ_MODE_ENABLED = "Sequential mode is enabled"
+    GL_SEQ_MODE_DISABLED = "Sequential mode is disabled"
+    GL_VOL_MODE_ENABLED = "Voluntary mode is enabled"
+    GL_VOL_MODE_DISABLED = "Voluntary mode is disabled"
+    GL_SEQ_MODE_NOT_SET = "Sequential mode not set"
+    GL_ENABLE_CACHE_WITH_MASK = "Enabling cache with mask option"
+    GL_ENABLE_CQ_AND_MODE_WITH_MASK = "Enabling CQ and CQ mode bit with mask option"
+    GL_DISABLE_CACHE_WITH_MASK = "Disabling cache with mask option"
+    GL_EXT_REG_WRITE_FAIL_FOR_MASK = "Write extension register failed for mask operation"
+    GL_CHECK_TSR_IS_0 = "Reading the task status register to see if it is 0"
+    GL_CARD_IN_CQ_TRANS_STATE_AFTER_DATA_TRANS = "Card is in CQ Tran state after data transfer\n"
+    GL_CARD_NOT_IN_CQ_TRANS_STATE_AFTER_DATA_TRANS = "Card is not in CQ Tran state after data transfer\n"
+    GL_CARD_IN_CQ_TRANS_STATE = "Card is in CQ trans state"
+    GL_CARD_NOT_IN_CQ_TRANS_STATE = "Card is not in CQ trans state"
+    GL_CARD_IN_CQ_TRANS_STATE_AFTER_CMD12 = "Card is in 'CQ Trans' state after CMD12\n"
+    GL_CARD_NOT_IN_CQ_TRANS_STATE_AFTER_CMD12 = "Card is not in 'CQ Trans' state after CMD12"
+    GL_CARD_NOT_IN_CQ_TRANS_STATE_AFTER_ERASE_OUT_OF_SEQ = "Card is not in 'CQ Tran' state after erase out of sequence"
+    GL_CARD_IN_CQ_BSY_STATE_AFTER_CMD43 = "Card is in CQ 'Bsy' state after CMD43\n"
+    GL_CARD_NOT_IN_CQ_TRANS_OR_BSY_STATE_AFTER_CMD43 = "Card is not in 'CQ Trans' or 'Bsy' state after CMD43"
+    GL_CARD_IN_CQ_TRANS_AFTER_CMD43_UNABLE_TO_CONFIRM_CQ_BSY = "Card is in 'CQ Trans' state after CMD43. Unable to confirm CQ 'Bsy' state\n"
+    GL_CARD_IN_CQ_TRANS_STATE_AFTER_CMD44 = "Card is in 'CQ Trans' state after CMD44\n"
+    GL_CARD_NOT_IN_CQ_TRANS_STATE_AFTER_CMD44 = "Card is not in 'CQ Trans' state after CMD44"
+    GL_CARD_IN_CQ_TRANS_STATE_AFTER_CMD45 = "Card is in 'CQ Trans' state after CMD45\n"
+    GL_CARD_NOT_IN_CQ_TRANS_STATE_AFTER_CMD45 = "Card is not in 'CQ Trans' state after CMD45"
+    GL_CARD_IN_CQ_RDT_STATE_AFTER_CMD46 = "Card is in CQ 'Rdt' state after CMD46\n"
+    GL_CARD_NOT_IN_CQ_RDT_STATE_AFTER_CMD46 = "Card is not in CQ 'Rdt' state after CMD46"
+    GL_CARD_IN_CQ_WDT_STATE_AFTER_CMD47 = "Card is in CQ 'Wdt' state after CMD47\n"
+    GL_CARD_IN_CQ_BSY_STATE_AFTER_CMD47 = "Card is in CQ 'Bsy' state after CMD47\n"
+    GL_CARD_NOT_IN_CQ_WDT_OR_BSY_STATE_AFTER_CMD47 = "Card is not in CQ 'Wdt' or 'Bsy' state after CMD47"
+    GL_CARD_NOT_IN_CQ_TRANS_OR_BSY_STATE_AFTER_CMD38 = "Card is not in 'CQ Trans' or 'Bsy' state after CMD38"
+    GL_CARD_IN_CQ_TRANS_STATE_AFTER_CQ_DIS = "Card is in 'CQ Trans' state after CQ disabled\n"
+    GL_CARD_NOT_IN_CQ_TRANS_STATE_AFTER_CQ_DIS = "Card is not in 'CQ Trans' state after CQ disabled"
+    GL_ABORT_QUEUE_BEFORE_DISABLE_CQ = "Aborting the queue before disabling CQ"
+    GL_ERROR_BIT_SET_IN_CMD13_SINCE_CQ_ENABLED_WITHOUT_CACHE = "ERROR bit set in CMD13 response since CQ is enabled without cache"
+    GL_ERROR_BIT_NOT_SET_IN_CMD13_SINCE_CQ_ENABLED_WITHOUT_CACHE = "ERROR bit not set in CMD13 response when CQ is enabled without cache"
+    GL_CQ_TASK_AGEING_DICT = "CQ Task Ageing Dictionary"
+    GL_NQ_IS_NOT_IN_QUEUE = "NQ = Not in Queue"
+    GL_RESEND_CMD44 = "CMD44[Q_TASK_INFO_A]: RESENDING CMD44 ....."
+    GL_TASKID_EXCEED_MAX_LIMIT = "TaskID exceeds maximum limit"
+    GL_TASK_ERROR_STATUS_IN_CMD48 = "Sending CMD48 to read task error status"
+    GL_ENABLE_SEQ_CQ_WITH_CACHE = "Enabling sequential CQ with cache feature"
+    GL_ENABLE_SEQ_CQ_WITHOUT_CACHE = "Enabling sequential CQ with out cache feature"
+    GL_ENABLE_VOL_CQ_WITH_CACHE = "Enabling voluntary CQ with cache feature"
+    GL_ENABLE_VOL_CQ_WITHOUT_CACHE = "Enabling voluntary CQ with out cache feature"
+    GL_CHECK_SEQ_CQ_ENABLED = GL_CHECKING % "Sequential CQ is enabled or not"
+    GL_CHECK_VOL_CQ_ENABLED = GL_CHECKING % "Voluntary CQ is enabled or not"
+    GL_CHECK_CACHE_ENABLED = GL_CHECKING % "Cache feature is enabled or not"
+    GL_CHECK_CACHE_DISABLED = GL_CHECKING % "Cache feature is disabled or not"
+    GL_GET_CQ_DEPTH = "Get card supported CQ depth"
+    GL_ABORT_WHOLE_Q = "Aborting the whole queue"
+    GL_ABORT_WHOLE_Q_WHEN_Q_EMPTY = "Aborting whole queue when queue is empty"
+    GL_ABORT_SINGLE_Q_WHEN_Q_EMPTY = "Aborting single queue when queue is empty"
+    GL_WHOLE_Q_ABORTED = "Whole queue is aborted\n"
+    GL_WHOLE_Q_NOT_ABORTED = "Whole queue is not aborted"
+    GL_WHOLE_Q_NOT_YET_ABORTED = "Whole queue is not yet aborted\n"
+    GL_SEQ_Q_NOT_ABORTED = "Sequential queue is not aborted"
+    GL_TASK_NOT_AVAIL_TO_BE_ABORTED = "No task is available to be aborted"
+    GL_WRITE_TASK_NOT_AVAIL_TO_BE_ABORTED = "No write task is available to be aborted"
+    GL_READ_TASK_NOT_AVAIL_TO_BE_ABORTED = "No read task is available to be aborted"
+    GL_NOT_ABLE_TO_Q_IN_BUSY = "Unable to queue task in busy state. Aborting whole queue"
+    GL_NOT_ABLE_TO_Q_IN_BUSY_TRY_AGAIN = "Unable to queue task in busy state. Try again....."
+    GL_BUSY_TIMEOUT_FOR_CMD43 = "Busy timeout occured for CMD43"
+    GL_CMD43_FOR_WHOLE_Q = "Sending CMD43 to abort all task"
+    GL_EXE_CMD18_AFTER_ABORT_WHOLE_Q = "Executing the READ_MULTIPLE_BLOCK command after aborting the whole queue"
+    GL_CMD43_TO_ABORT_Q_FOR_NEXT_CMD_VERIFY = "Sending CMD43 to abort the queue for next cmd verification"
+    GL_CHECK_ABORT_STATUS_IN_TSR = GL_CHECKING % "Abort status in TSR(Task Status Register)"
+    CQ_CACHE_CQMODE_WRITE_READ_EQUAL = "EnableCQ, CacheEnable, CQMode fields are equal"
+    GL_EXE_ALL_QUEUED_TASKS_BEFORE_DATA_COMPARE = "Executing all the tasks in queue before testing data compare"
+    GL_EXE_ALL_QUEUED_TASKS = "Executing all the queued tasks"
+    GL_EXECUTED_ALL_QUEUED_TASKS = "Finished executing all the tasks in the queue\n"
+    GL_QUEUE_ONE_TASK_SINCE_QUEUE_BECAME_EMPTY = "Queueing one task since queue became empty"
+    GL_TSR_NOT_0_AFTER_EXE_ALL_TASKS = "CQTaskStatusRegister is not 0 after executing all the tasks"
+    GL_TSR_NOT_0_AFTER_EXE_OR_ABORT_ALL_TASKS = "CQTaskStatusRegister is not 0 after executing or aborting all the tasks"
+    GL_Q_EMPTY_SO_QUIT_WITHOUT_SEND_CMD43 = "Queue is empty. Quiting without sending CMD43"
+    GL_EXE_QUEUED_TASKS_REMAINS = "Executing the remaining queued tasks"
+    GL_TSR_READ = "Reading task status register"
+    GL_Q_UPDATED_BY_CMD43_READ_TSR_AGAIN = "Queue is updated by Cmd43. Reading the task status register again..."
+    GL_TSR_CLEARED_BY_CMD0 = "Task status register is cleared by CMD0"
+    GL_TSR_NOT_CLEARED_BY_CMD0 = "Task status register is not cleared by CMD0"
+    GL_TSR_CLEARED_BY_POW_CYCLE = "Task status register is cleared by power cycle"
+    GL_TSR_NOT_CLEARED_BY_POW_CYCLE = "Task status register is not cleared by power cycle"
+    GL_Q_LIST_LESS_THAN_2_SO_UNABLE_TO_TEST_ERR_SCENARIO = "Queue list less than 2. So unable to test QueueRandomTaskInSeqCQ error scenario"
+    GL_Q_EMPTY_SO_UNABLE_TO_TEST_ERR_SCENARIO = "Queue list is empty. So unable to test ReQueueCompletedTasksInSeqCQ error scenario"
+    GL_CMD0_DURING_CMD43_BUSY_PERIOD = "Sending CMD43 then sending CMD0 during CMD43 busy period...."
+    GL_POW_OFF_DURING_CMD43_BUSY_PERIOD = "Sending CMD43 then sending power off during CMD43 busy period...."
+    GL_CMD13_AFTER_CMD0 = "Sending CMD13 after CMD0. CMD13 should fail"
+    GL_CMD13_AFTER_POW_OFF = "Sending CMD13 after power off. CMD13 should fail"
+    GL_CMD13_SHOULD_FAIL_AFTER_CMD0_BUT_PASSED = "CMD13 should fail after CMD0. But it passed."
+    GL_CMD13_SHOULD_FAIL_AFTER_POW_OFF_BUT_PASSED = "CMD13 should fail after power off. But it passed."
+    GL_STAND_BY_STATE_IN_CMD13_RES = "Stand-By state reported in CMD13 response\n"
+    GL_DISCONNECT_STATE_IN_CMD13_RES = "Disconnected state reported in CMD13 response\n"
+    GL_STAND_BY_NOR_DISCON_OCCURED_IN_CMD13_RESP_AFTER_CMD7 = "Stand-By nor disconnect state reported in CMD13 sent after CMD7 Abort"
+    GL_CQ_SANITY_TEST_WRITE_READ_COMPARE_AFTER_STOP_TRANS = "CQ sanity test. Write-Read-Compare after stop transmission\n"
+    GL_CQ_SANITY_TEST_WRITE_READ_COMPARE_AFTER_POWER_ABORT = "CQ sanity test. Write-Read-Compare after power abort\n"
+    GL_CQ_SANITY_TEST_WRITE_READ_COMPARE_AFTER_CMD0 = "CQ sanity test. Write-Read-Compare after CMD0 abort\n"
+    GL_LEGACY_SANITY_TEST_WRITE_READ_COMPARE_AFTER_STOP_TRANS = "CQ sanity test. Write-Read-Compare after stop transmission\n"
+    GL_LEGACY_SANITY_TEST_WRITE_READ_COMPARE_AFTER_POWER_ABORT = "CQ sanity test. Write-Read-Compare after power abort\n"
+    GL_CHECK_DATA_AFTER_POW_ABORT = GL_CHECKING % "The data after power off abort"
+    GL_CHECK_DATA_AFTER_CMD0_ABORT = GL_CHECKING % "The data after CMD0 abort"
+    GL_LEGACY_SANITY_TEST_WRITE_READ_COMPARE_AFTER_CMD0 = "CQ sanity test. Write-Read-Compare after CMD0 abort\n"
+    GL_SEND_CMD44_WITH_TASKID_GREATER_THAN_CQ_DEPTH = "Sending CMD44 with task ID greater than CQ depth"
+    GL_CMD44_CMD45_INVALID_TASKID = "send CMD44 and CMD45 for invalid task ID"
+    GL_ONLY_CMD44_FOR_INVALID_TASKID = "Send only CMD44 for invalid task ID"
+    GL_INVALID_CMD45_WITHOUT_CMD44 = "Send invalid CMD45 without CMD44"
+    GL_VALID_CMD44_WITH_MISSING_CMD45 = "Valid CMD44 with missing CMD45"
+    GL_VALID_CMD44_CMD45 = "Valid CMD44 + CMD45"
+    GL_VALID_CMD46_CMD47 = "Valid CMD46 + CMD47"
+    GL_CMD46_FOR_INVALID_TASKID = "Send CMD46 for invalid task ID"
+    GL_CMD47_FOR_INVALID_TASKID = "Send CMD47 for invalid task ID"
+    GL_CMD46_INSTEAD_OF_CMD47 = "Send CMD46 instead of CMD47"
+    GL_CMD47_INSTEAD_OF_CMD46 = "Send CMD47 instead of CMD46"
+    GL_CMD46_FOR_1ST_CMD44_INPUT = "Sending CMD46 with first CMD44 inputs"
+    GL_CMD47_FOR_1ST_CMD44_INPUT = "Sending CMD47 with first CMD44 inputs"
+    GL_CMD46_FOR_LAST_CMD44_INPUT = "Sending CMD46 with last CMD44 inputs"
+    GL_CMD47_FOR_LAST_CMD44_INPUT = "Sending CMD47 with last CMD44 inputs"
+    GL_SEND_CMD46_FOR_OUT_OF_RANGE = "Sending CMD46 for OUT_OF_RANGE LBA"
+    GL_CMD46_R1_RES_NOT_HAVE_OOR_SO_CHECK_AT_DATA_TRANS_STATUS = "CMD46 R1 response does not have OUT_OF_RANGE. Looking at CMD46 data transfer status..."
+    GL_DATA_TIME_OUT_FOR_CMD46_OOR_OCCURED_IN_NEXT_CMD13 = "Data time out for CMD46 and expected OUT_OF_RANGE error reported by card in next CMD13"
+    GL_SEND_CMD47_FOR_OUT_OF_RANGE = "Sending CMD47 for OUT_OF_RANGE LBA"
+    GL_CMD47_R1_RES_NOT_HAVE_OOR_SO_CHECK_AT_DATA_TRANS_STATUS = "CMD47 R1 response does not have OUT_OF_RANGE. Looking at CMD47 data transfer status..."
+    GL_CMD47_R1_RES_NOT_HAVE_WP_VOILATION_SO_CHECK_AT_DATA_TRANS_STATUS = "CMD47 R1 response does not have WP_VOILATION. Looking at CMD47 data transfer status..."
+    GL_DATA_TIME_OUT_FOR_CMD47_AND_OOR_OCCURED_IN_NEXT_CMD13 = "Data time out for CMD47 and expected OUT_OF_RANGE error reported by card in next CMD13"
+    GL_DATA_TIME_OUT_FOR_CMD47_AND_WP_VOILATION_OCCURED_IN_NEXT_CMD13 = "Data time out for CMD47 and expected WP_VOILATION error reported by card in next CMD13"
+    GL_OOR_NOT_OCCURED_IN_CMD13_SEND_AFTER_CMD47 = "OUT_OF_RANGE is not reported by card in CMD13 sent after CMD47"
+    GL_WP_VOILATION_NOT_OCCURED_IN_CMD13_SEND_AFTER_CMD47 = "WP_VOILATION is not reported by card in CMD13 sent after CMD47"
+    GL_ALL_TASKS_READY_SO_ABORT_WHOLE_Q = "All tasks are ready. So aborting the whole queue to try again...."
+    GL_ERROR_BIT_SET_IN_CMD43_R1_RES = "ERROR bit set in CMD43 R1 response"
+    GL_ERROR_BIT_NOT_SET_IN_CMD43_R1_RES = "ERROR bit not set in CMD43 R1 response"
+    GL_SEND_CMD13_UNTIL_CARD_TO_CQ_TRANS = "Sending CMD13 until card comes to 'CQ Tran' state"
+    GL_Q_AND_EXE_FEW_TASKS_AFTER_STRESS_ABORT = "Queueing and executing few tasks after stressing abort"
+    GL_AGEING_THRESHOLD_YET_TO_DECIDE = "Ageing threshold yet to be decided. Returning without executing the test"
+    GL_START_BATCH_FPGA_DOWNLOAD = "Starting BatchMode FPGA Download"
+    GL_NOT_VALID_CSV_ENTRY = "No valid entries in csv file"
+    GL_BATCH_BUFFER = "Batch data buffer"
+    GL_CLASS2_PERF_TEST_FAIL = "CQ class2 performance test failed"
+    GL_PRECOND_CARD_FOR_CLASS2_RANDOM_PERF = "Preconditioning the card for CQ class2 random performance measurement"
+    GL_PRECOND_CARD_FOR_CLASS2_SEQ_PERF = "Preconditioning the card for CQ class2 sequential performance measurement"
+    GL_CALL_PERF_MEASURE_API = "Calling performance measurement API"
+    GL_CLASS2_RANDOM_WRITE_PERF = "Class2 random write performance"
+    GL_CLASS2_RANDOM_READ_PERF = "Class2 random read performance"
+    GL_CLASS2_RANDOM_WRITE_READ_PERF = "Class2 random WriteRead performance"
+    GL_CLASS2_RANDOM_WRITE_PERF_FAIL = "Class2 random write performance test failed"
+    GL_CLASS2_RANDOM_READ_PERF_FAIL = "Class2 random read performance test failed"
+    GL_CLASS2_SEQ_WRITE_PERF = "Class2 sequential write performance"
+    GL_CLASS2_SEQ_WRITE_PERF_FAIL = "Class2 sequential write performance test failed"
+    GL_RANDOM_WRITE_RPTU_REGION = "Randomly writing in RPTU region\n"
+    GL_CMD0_TO_RESET_CARD = "Sending CMD0 to reset the card"
+    GL_ERASE_RESET_BIT_ENABLED = "Erase reset bit is enabled in the R1 Response"
+    GL_ERASE_RESET_BIT_NOT_ENABLED = "Erase reset bit is not enabled in the R1 Response"
+    #################### CQ - ENDS ####################
+
+    #################### LOCK UNLOCK - BEGINS ####################
+    GL_CARD_LOCKED = "Card is in locked state"
+    GL_CARD_NOT_LOCKED = "Card is not in locked state"
+    GL_CARD_NOT_LOCKED_OR_NOT_IN_TRANS = "Card is not locked or card is not in transfer state"
+    GL_CARD_LOCKED_OR_NOT_IN_TRANS = "Card is locked or card is not in transfer state"
+    #################### LOCK UNLOCK - ENDS ####################
+
+    #################### SWITCH CMD - BEGINS ####################
+    #################### SWITCH CMD - ENDS ####################
+
+    #################### VIDEO SPEED CLASS - BEGINS ####################
+    #################### VIDEO SPEED CLASS - ENDS ####################
+
+    GL_CMD_FAIL = "Command Failure"
+    GL_CMD_FAIL_EXCEPTION = "Command Failed with an Exception"
+    GL_GET_SD_STATUS_FAIL = "Failed to get card SD status"
+    GL_LOCK_CARD = "LOCKing the Card"
+    GL_UNLOCK_CARD = "UNLOCKing the Card"
+    GL_VSC_COND = "Card did not meet Video Speed Class conditions"
+    GL_TIME_OUT_ERROR = "Switch Voltage. Time out Error on Card Response"
+    GL_TIME_OUT_ERROR_COMPARE = "Expected to fail: Time out error on card response"
+    GL_RESET_CARD_FAIL = "Expected to fail: Card Reset"
+    GL_CALL_ALL_SCRIPT = "Call All Script to run the specified scripts"
+    GL_QUARY_MODE_CRCT = "High Voltage Card response to Quary mode is correct value"
+    GL_QUARY_MODE_INCRCT = "High Voltage Card response to Quary mode is incorect value"
+    GL_CARD_INIT_INCMPLTE = "Expected to fail: Card Initialization incomplete"
+    GL_AUTOCOMP_TIMEOUT_ERROR = "Expected to fail: Auto compare error along with Time out on Card Response"
+    GL_CARD_ID_FAIL = "Expected to fail: Card Identification"
+    GL_LKULK_FAIL = "Expected to fail: LOCK_UNLOCK operation"
+    GL_LKULK_PASS = "Expected to pass: LOCK_UNLOCK operation"
+    GL_SCR_COMP_PASS = "Comparison passed. SCR values are as expected"
+    GL_SCR_COMP_FAIL = "Comparison failed. SCR values returned are different as expected"
+    GL_OUT_OF_RANGE_EXPTD = "Expected Error: Card status is OUT OF RANGE"
+    GL_OUT_OF_RANGE_UNEXPTD = "UnExpected Error: Card status is not in OUT OF RANGE"
+    GL_ASIC_DVT = "globalDVTTestScope is AsicDVT. Test Case second iteration started"
+    GL_NOT_ASIC_DVT = "globalDVTTestScope is not AsicDVT"
+    GL_BLK_LEN = "Expected to fail as block length is < than the expected size"
+    GL_WR_FIN_LEG = "Finished Reading in Legacy mode"
+    GL_WR_FIN_CQ = "Finished writing in CQ mode"
+    GL_PERF_TEST_FAIL = "Performance Test Failed"
+    GL_SEQ_WR_TEST_FAIL = "Sequential Write test Failed"
+    GL_CARD_NOT_READY = "Card is not Ready for Data"
+    GL_READ_FAIL_EXPTD = "Expected Error: Read Failed"
+    GL_READ_FAIL_UNEXPTD = "UnExpected Error: Read Failed"
+    GL_WRITE_FAIL_EXPTD = "Expected Error: Write Failed"
+    GL_WRITE_FAIL_UNEXPTD = "UnExpected Error: Write passed"
+    GL_PERM_WR_PRTCT_MISCOMP_ERR = "Permanent Write Protect Field Miscompare error"
+    GL_TEMP_WR_PRTCT_MISCOMP_ERR = "Temporary Write Protect Field Miscompare error"
+    GL_CPY_FLAG_FLD_MISCOMP_ERR = "Copy Flag Field Miscompare error"
+    GL_CPY_FLAG_VAL_COMP_SUCCESS = "Copy Flag Values, compare successfull"
+    GL_NO_OF_WR_BLKS_MATCH = "Number of Written blocks matches as per argument provided"
+    GL_NO_OF_WR_BLKS_MISMATCH = "Number of Written blocks does not match as per argument provided"
+    GL_PERM_WR_PROTECT_DIS = "PERMANANT_WRITE_PROTECT bit is disabled. Card is removed from Write Protected Mode"
+    GL_HOST_RST_ERR = "Failed to Reset Host"
+    GL_WRITE_TO_FIRM = "Write to Firmware File called"
+    GL_READ_FIRM = "Read Firmware File called"
+
+# Generic Log Message  Class - Ends

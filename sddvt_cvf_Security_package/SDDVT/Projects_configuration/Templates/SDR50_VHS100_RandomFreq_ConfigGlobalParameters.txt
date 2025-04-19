@@ -1,0 +1,229 @@
+// var types:  (0) bit    (1) signed long    (2) real   (3) string   (4) buffer     (5) unsigned long
+
+//-------------------------------------//
+// Configuration file version - 2.8    //
+//-------------------------------------//
+
+//----------------------------------//
+// Global varibles values:          //
+//----------------------------------//
+
+globalLSHostFreq(5)=25000
+globalHSHostFreq(5)=50000
+globalVHSHostFreq(5)=100000
+globalHostVoltage(5)=3300
+globalResetTO(5)=500
+globalReadTO(5)=100
+globalWriteTO(5)=250
+globalSpecVer(3)=SD3.00
+globalCardCapacity(3)=HC
+globalFlashType(3)=MTP
+globalCardVoltage(3)=HV
+globalProtocolMode(3)=SD
+globalSpeedMode(3)=SDR50
+globalBusMode(3)=Four
+globalOCRArgValue(5)=1107263488
+globalOCRArgSPIValue(5)=1073741824
+globalOCRResValue(5)=3254747136
+globalPowerUp(3)=powerCycle
+globalCPRM(3)=Secure
+globalparamfile(3)=R:\QA\Phoenix2_bot_files\SD\Phoenix_H\PHNX2S301199j10n_60RGN01A\Phnx2_SD_SDR50_Premier_HC_C10_U1_param_I026U000.txt
+globalFFUPath(3)=
+globalVDDHMaxCurrent(5)=300
+globalVDDFMaxCurrent(5)=100
+globallockunlock(3)=no
+globalReadAheadSize(5)=10
+globalDVTTestScope(3)=AsicDVT
+globalDBName(3)=SDSDQY549030104_016G_eX2_PC2HU_19nm_C10_j10n_SDR50
+globalRandom(3)=NONE
+//----------------------------------//
+// Configuration varibles values:   //
+//----------------------------------//
+configBlockCNT(5)=100000
+configBusyResetTO(5)=100000
+configBusyReadTO(5)=100000
+configBusyWriteTO(5)=100000
+configLoopCounter(5)=10
+//----------------------------------//
+// TSB Product Flag                 //
+//----------------------------------//
+globalTSBProductFlag(3)=NO
+//----------------------------------//
+// Performance Flag                 //
+//----------------------------------//
+globalPerfFlag(3)=1
+//----------------------------------//
+// Parameter Check                  //
+//----------------------------------//
+SpeedMode(3)=NONE
+SpeedClass(3)=NONE
+PerformanceClassFlag(5)=0
+PerformanceClassN(3)=Prem
+PerformanceClassM(3)=Premier
+SpeedGrade(3)=NONE
+
+//----------------------------------------------------------------------------------------------------//
+// Global varibles - value options                                                                    //
+//----------------------------------------------------------------------------------------------------//
+// globalLSHostFreq         - KHz units
+// globalHSHostFreq         - KHz units
+// globalVHSHostFreq        - KHz units - very high frequency (e.g lightning mode)
+// globalHostVoltage        - Voltage units (mV)
+// globalResetTO            - mSEC units
+// globalReadTO             - mSEC units
+// globalWriteTO            - mSEC units
+// globalSpecVer            - SD2.00, SD3.00, eSD2.10, SD1.1, SD1.01, MMC3.3, MMC4.1, MMC4.2, eMMC4.3, eMMC4.4minus, eMMC4.41
+// globalFlashType          - MTP, OTP, ROM, X4
+// globalProtocolMode       - SD, SDinSPI, MMC, MMCinSPI
+// globalCardCapacity       - HC, LC,
+// globalSpeedMode          - LS, HS, Lightning, DDR, SDR12, SDR25, SDR50, SDR104, DDR50, RandomSDR12_LS, RandomSDR25_DDR50_HS
+// globalBusMode            - Single, Four, Eight
+// globalOCRArgValue        - DEC format number (e.g 0x00FF8000 - 16744448, 0x40FF8000 - 1090486272, 0x40FF8080 - 1090486400)
+// globalOCRArgSPIValue     - DEC format number (SPI) (e.g 0x40000000 - 1073741824)
+// globalOCRResValue        - DEC format number (e.g 0x80FF8000 - 2164228096, 0xC0FF8000 - 3237969920, 0xC0FF8080 - 3237970048)
+// globalCardVoltage        - HV, LV
+// globalPowerUp            - powerCycle, softReset, powerCycleNoCMD0
+// globalCPRM               - Secure, NonSecure
+// globalparamfile          - param file name and path used for download and secure format
+// globalVDDHMaxCurrent     - value for max VDDH current consumption limit (in mA)
+// globalVDDFMaxCurrent     - value for max VDDF current consumption limit,(in mA)
+//                            It is used only in cards that has separate power supplies
+//                            (for example iNAND)
+//                            In inand cards the over-all current consumption should be divided
+//                            between VDDH and VDDF
+// globallockunlock        - yes/no - this variable is used to determine if the card is capable to perform lock/unlock command (for eSD+Rom cards doesnt support lock/unlock)
+// globalFFUPath            - Full path for FFU files (e.g X:\XX\XXX\ )
+// globalReadAheadSize      - Size in sectors to allow read/write ahead from the end of a given area (limitations: globalReadAheadSize < configBlockCNT)
+// globalDVTTestScope       - AsicDVT   - DVT tests for ASIC.
+//                          - SanityDVT - faster DVT for Sanity tests
+//                          - FullDVT   - TBD
+//                          - QuiqDVT   - TBD
+// globalDBName             - None - Will not report to Data Base.
+//                            Any other name will report the project to the Data Base.
+// globalRandom             - NONE, Freq
+//----------------------------------------------------------------------------------------------------//
+// Configuration varibles - value options                                                             //
+//----------------------------------------------------------------------------------------------------//
+// configBlockCNT           - 0 - U/3 Sectors                                 - Common for all SPEC's
+//                          - 1 - Random%1024 Sectors
+//                          - Any other sectors value (up to U/3)
+// configBusyResetTO        - mSEC units                                      - Common for all SPEC's
+// configBusyReadTO         - mSEC units                                      - Common for all SPEC's
+// configBusyWriteTO        - mSEC units                                      - Common for all SPEC's
+// configLoopCounter        - Loop #                                          - SD SPEC 2.00
+//
+//-------------------------------------//
+// cHANGES:                            //
+//-------------------------------------//
+// Rev 1.1 -
+// globalOCRArgSPIValue     - OCR Argument in SPI mode
+//
+// ----------------------------------------
+// Rev 1.2 -
+// globalCardCapacitySize(3) - Card Capacity value
+// golbalCardFormFactor(3) - Card Form Factor
+// globalDVTTestScope(3) - scope of the DVT tests
+//
+//----------------------------------------
+// Rev 1.3 -
+// globalHostVoltage - var type changed to (5) unsigned long and number format changed to mV (example 3300 for 3.3V)
+//
+//----------------------------------------
+// Rev 1.4 -
+// globalHostVoltage - var type changed back to (2) real and number format changed to Volts (3.300000000V)
+// globalparamfile - added - param file name and path used for secure format - var type = (3) string
+//
+//----------------------------------------
+// Rev 1.5 -
+// globalSpecVer            - Add support in eSD SPEC 2.10
+// globalCPRM               - Test secure (CPRM) mode
+// globalSelectPartitionTO  - T.O. for Select Partition command (eSD command)
+// globallockunlock         - whether to run lock_unlock commands mainly for eSD
+//
+//----------------------------------------
+// Rev 1.6 -
+// globalHostVoltage    - var type changed to (5) unsigned long and number format changed to mV (example 3300 for 3.3V)
+// globalVDDHMaxCurrent - added - value for max VDDH current consumption limit (in mA)
+// globalVDDFMaxCurrent - added - value for max VDDF current consumption limit (in mA)
+// globalFBResetTO      - T.O. for Reset Process with Fast Boot Attribute (eSD command) - mSEC units
+//----------------------------------------
+//
+// Rev 1.7 -
+// globalVHSHostFreq - added,very high frequency (e.g lightning mode)
+// globalSpeedMode   - added Lightning value
+//
+//----------------------------------------
+// Rev 1.8 -
+// The following varibles were moved to script globalPreTestingSettings.sc3:
+// globalCardRCA
+// globalResetFreq
+// globalVOLAValue
+// globalDVTTestScope
+// globalProjectType
+// globalFBResetTO
+// configPatternFiledInCMD8
+// configResetTOCounter
+// globallockunlock
+// globalSelectPartitionTO
+// globalCardCapacitySize
+// globalCardFormFactor
+// globalCardType
+// configBlockCNT value was modified to support 3 options:
+//                U/3 Sectors, Random%1024 Seectors and any
+//                other sectors value (up to U/3)
+//----------------------------------------
+// Rev 1.9 -
+// globallockunlock - moved back to txt file (for eSD)
+//----------------------------------------
+// Rev 2.0 -
+// globalFlashType - added X4 value to support spinner-X4 cards
+// globalSpecVer   - added eMMC4.4minus to support this spec
+//----------------------------------------
+// Rev 2.1 -
+// globalFFUPath   - added a support for loading FFU files.
+//----------------------------------------
+// Rev 2.2 -
+// globalSpecVer   - added eMMC4.3 to support this spec
+// globalReadAheadSize - Size in sectors to allow read/write ahead from the end of a given area.
+//----------------------------------------
+// Rev 2.3 -
+// globalPowerUp   - added powerCycleNoCMD0 to support POR without CMD0 option.
+//----------------------------------------
+// Rev 2.4 -
+//
+//----------------------------------------
+// Rev 2.5 -
+// globalSpecVer - Add support in eMMC SPEC eMMC4.41
+//         - Add support in SD SPEC SD3.00
+//----------------------------------------
+// Rev 2.6 -
+// globalSpeedMode          - added DDR value to support DDR Mode (SD & MMC).
+// globalDBName             - Allow to conect a project to the Data Base.
+//----------------------------------------
+// Rev 2.7 -
+// globalSpeedMode          - added SDR12, SDR25, SDR50, SDR104, DDR50, RandomSDR12_LS, RandomSDR25_DDR50_HS to support UHS
+// globalRandom             - Allow to randomize a specific configuration, currently 2 values: NONE, Freq
+//----------------------------------------
+// Rev 2.8 -
+// globalTSBProductFlag     - This flag is added to validate TSB specific PNM.
+//                            YES : TSB Products
+//                            NO  : Non-TSB Products
+//----------------------------------------
+// Rev 2.9 -
+// globalPerfFlag     - This flag is added to validate performance specific PNM.
+//                            1 : older version
+//                            2 : blue (Standard)
+//                            3 : Ultra
+//                            4 : Extreme
+//                            5 : Extreme Pro
+//----------------------------------------
+// Rev 2.10 -
+// Following variables are added to keep a check for parameter file:
+// Parameter             Definition                            Types
+// =========             ==========                            =====
+// SpeedMode            -> Speed Mode                         -> NONE,SDR12, SDR25, SDR50, UHS104, DDR50
+// SpeedClass           -> Speed Class                        -> NONE,C0,C2,C4,C6,C10
+// PerformanceClass     -> Performance of card                -> NONE,Perf,Prem(or HiPerf),Supr,Prof (PerformanceClassFlag=1)
+//                                                            -> NONE,Performance,Premier(or HiPerformance),Superior,Professional(PerformanceClassFlag=2)
+// SpeedGrade           -> Speed Grade Value                  -> NONE,U0,U1
+//---------------------------------------- 

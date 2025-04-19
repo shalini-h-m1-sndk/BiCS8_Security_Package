@@ -1,0 +1,5 @@
+REM Python VRun.py --test=TC06_01_Maximum_CounterCheck.py --isModel=false --enable_console_log=1 --adapter=2 --skip_commands_during_device_init=1
+
+Python VRun.py --test=PRMA_Felix --isModel=false --adapter=2 --bot_file=C:\CFG_Signed_Latest.bot --sdparamsfile=C:\Felix_SD_HC_I802_DDR200_ExtremePro_C10_U3_V30_A2.txt --forceDownload=false --TestsDir=C:\Program Files (x86)\SanDisk\CVF_3.0_x64\Python --TestsCfgDir=C:\Program Files (x86)\SanDisk\CVF_3.0_x64\Python --PlaylistDir=C:\Program Files (x86)\SanDisk\CVF_3.0_x64\Python --fpgafile=C:\SD-SDR2_2-01-01-0061.bin --trimfile=C:\20_22_SDTRIM_0102.trm --altoptions=1 --altloopcount=10 --altbanknumber=0 --altchipnumber=0 --altdienumber=0 --isModel=False --skip_commands_during_device_init=1 --diagnosticchunksize=120
+
+Python VRun.py --test=TC06_02_Maximum_CounterCheck.py --isModel=false --enable_console_log=1 --adapter=2 --skip_commands_during_device_init=1

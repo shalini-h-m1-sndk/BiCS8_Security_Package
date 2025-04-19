@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--To know more about playlists refer - https://confluence.wdc.com/display/SSDFW/VTF+User+Guide#VTFUserGuide-_Toc60832124-->
+<Playlists xmlns="vtfSchema">
+    <Playlist name="CMD23_CA01_SDMode" directTestMode="true" runOnce="true">
+        <Steps>1</Steps>
+        <TestRef testName="CMD23_TC001_Valid_Write_Read" />
+        <TestRef testName="CMD23_TC002_Valid_Write_Read_WithStopTran" />
+        <TestRef testName="CMD23_TC003_ValidWritePowerLoss_Bit_and_Busy" />
+    <TestRef testName="CMD23_TC004_InvalidWrite" />
+    <TestRef testName="CMD23_TC005_InvalidWriteStopTran" />
+    <TestRef testName="CMD23_TC006_ReadWriteTypesCallRandomBlock" />
+    <TestRef testName="CMD23_TC007_LockUnlock" />
+    <TestRef testName="CMD23_TC008_CMD20RandomTestUsingCMD23" />
+        <TestRef testName="CMD23_TC009_StateTest" />
+
+    </Playlist>
+</Playlists>

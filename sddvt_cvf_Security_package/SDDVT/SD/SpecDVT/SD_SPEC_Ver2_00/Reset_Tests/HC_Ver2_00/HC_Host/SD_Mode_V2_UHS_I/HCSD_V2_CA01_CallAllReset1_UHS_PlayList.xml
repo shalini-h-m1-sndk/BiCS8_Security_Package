@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--To know more about playlists refer - https://confluence.wdc.com/display/SSDFW/VTF+User+Guide#VTFUserGuide-_Toc60832124-->
+<Playlists xmlns="vtfSchema">
+    <Playlist name="HCSD_V2_CA01_CallAllReset1_UHS_PlayList" directTestMode="true" runOnce="true">
+        <Steps>1</Steps>
+        <TestRef testName="HCSD_V2_TC017_OCRValuesInHighCapacityCardOverHighCapacityHost" />
+        <TestRef testName="HCSD_V2_TC018_OCRvaluesInPowerCycleHV" />
+        <TestRef testName="HCSD_V2_TC019_OCRvaluesInPowerCycleWithCMD0HV" />
+        <TestRef testName="HCSD_V2_TC020_ResetHighCapacityCardWithDefultValuesInCMD8" />
+        <TestRef testName="HCSD_V2_TC001_1_1_1_1" />
+        <TestRef testName="HCSD_V2_TC002_1_1_1_2" />
+        <TestRef testName="HCSD_V2_TC003_1_1_1_2a" />
+        <TestRef testName="HCSD_V2_TC004_1_1_1_3" />
+        <TestRef testName="HCSD_V2_TC005_1_1_1_4" />
+        <TestRef testName="HCSD_V2_TC006_1_1_1_5" />
+        <TestRef testName="HCSD_V2_TC007_1_1_1_8" />
+        <TestRef testName="HCSD_V2_TC008_1_1_1_10" />
+        <TestRef testName="HCSD_V2_TC009_1_1_1_12" />
+        <TestRef testName="HCSD_V2_TC010_1_1_1_14" />
+        <TestRef testName="HCSD_V2_TC011_1_1_1_14a" />
+        <TestRef testName="HCSD_V2_TC012_1_1_1_17" />
+        <TestRef testName="HCSD_V2_TC013_1_1_1_18" />
+        <TestRef testName="HCSD_V2_TC014_1_1_1_20a" />
+        <TestRef testName="HCSD_V2_TC015_1_1_1_20b" />
+        <TestRef testName="HCSD_V2_TC016_1_1_1_20c" />
+    </Playlist>
+</Playlists>
