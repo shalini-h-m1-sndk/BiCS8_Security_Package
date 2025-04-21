@@ -1,0 +1,253 @@
+"""
+################################################################################
+# Copyright (c) SanDisk Corp.2022 - All rights reserved.This code, and all
+# derivative work, is the exclusive property of SanDisk and may not be used
+# without SanDisk's authorization.
+#
+# SCRIPTER PARENT SCRIPT         : None
+# SCRIPTER SCRIPT                : ConfigSD_UT002_GlobalInitCard.st3
+# CTF CALL ALL SCRIPT            : None
+# CTF SCRIPT                     : ConfigSD_UT002_GlobalInitCard.py
+# CVF PLAYLIST SCRIPT            : None
+# CVF SCRIPT                     : ConfigSD_UT002_GlobalInitCard.py
+# DESCRIPTION                    : Initialize the card
+# PRERQUISTE                     : [ConfigSD_UT007_GlobalSetBusMode.py, ConfigSD_UT003_GlobalInitSDCard.py, ConfigSD_UT005_GlobalPreTestingSettings.py,
+                             ConfigSD_UT011_GlobalSetLSHostFreq.py, ConfigSD_UT013_GlobalSetSpeedMode.py ConfigSD_UT014_GlobalSetTO.py, ConfigSD_UT006_GlobalSetVolt.py]
+# STANDALONE EXECUTION           : No. It is an utility script
+# TEST ARGUMENTS                 : None
+# AUTHOR [Referred Scripter/CTF] : Sivagurunathan
+# REVIEWED BY                    : None
+# DATE                           : 20/06/2022
+################################################################################
+"""
+
+# SDDVT - Dependent TestCases
+import SDDVT.Config_SD.ConfigSD_UT007_GlobalSetBusMode as globalSetBusMode
+import SDDVT.Config_SD.ConfigSD_UT003_GlobalInitSDCard as globalInitSDCard
+import SDDVT.Config_SD.ConfigSD_UT005_GlobalPreTestingSettings as globalPreTestingSettings
+import SDDVT.Config_SD.ConfigSD_UT011_GlobalSetLSHostFreq as globalSetLSHostFreq
+import SDDVT.Config_SD.ConfigSD_UT013_GlobalSetSpeedMode as globalSetSpeedMode
+import SDDVT.Config_SD.ConfigSD_UT014_GlobalSetTO as globalSetTO
+import SDDVT.Config_SD.ConfigSD_UT006_GlobalSetVolt as globalSetVolt
+
+# SDDVT - Common Interface for Testcase
+import SDDVT.Common.DvtCommonLib as DvtCommonLib
+
+# SDDVT - SD Specification and commands related Interface
+import SDDVT.Common.SDCommandLib as SDCommandLib
+
+# SDDVT - Error Utils
+import SDDVT.Common.ErrorCodes as ErrorCodes
+
+# SDDVT - Configuration Data
+import SDDVT.Common.getconfig as getconfig
+import SDDVT.Common.GlobalConstants as gvar
+from SDDVT.Common.customize_log import customize_log
+
+# CVF Packages
+import SDCommandWrapper as sdcmdWrap
+import CTFServiceWrapper as ServiceWrap
+import Protocol.SD.Basic.TestCase as TestCase
+import Core.Configuration as Configuration
+import Core.ValidationError as ValidationError
+import Validation.CVFTestFactory as FactoryMethod
+
+# Python Build-in Modules
+import random
+import os
+import sys
+from inspect import currentframe, getframeinfo
+
+# Global Variables
+
+
+class Singleton(type):
+    def __init__(self, *args, **kwargs):
+        super(Singleton, self).__init__(*args, **kwargs)
+        self.instance = None
+
+    def __call__(self, *args, **kwargs):
+        if self.instance is None:
+            self.instance = super(Singleton, self).__call__(*args, **kwargs)
+        return self.instance
+
+
+class globalInitCard(customize_log):
+    """
+    class for Loading all Local variables of params file
+    """
+    __metaclass__ = Singleton
+
+    def __init__(self, VTFContainer):
+        """
+        Name        :  __init__
+        Description : Constructor for Class globalInitCard
+        Arguments   :
+            VTFContainer : The VTFContainer used for running the test
+        """
+
+        ###### Creating CVF objects ######
+        self.vtfContainer = VTFContainer
+        self.currCfg = Configuration.ConfigurationManagerInitializer.ConfigurationManager.currentConfiguration
+        self.CVFTestFactory = FactoryMethod.CVFTestFactory().GetProtocolLib()
+        self.__TF = self.CVFTestFactory.TestFixture
+        self.__ErrorManager = self.vtfContainer.device_session.GetErrorManager()
+
+        ###### Loading General Variables ######
+        self.__testName = self.vtfContainer.GetTestName()
+
+        ###### Loading testcase specific XML variables ######
+        self.testLoop = self.currCfg.variation.testloop
+        self.StartBlockAddr = self.currCfg.variation.startlba
+        self.NumBlocks = self.currCfg.variation.blockcount
+        self.lbaAlignment = self.currCfg.variation.lbaalignment
+
+        ###### Creating SDDVT objects ######
+        self.__config = getconfig.getconfig()
+        self.__dvtLib = DvtCommonLib.DvtCommonLib(self.vtfContainer)
+        self.__sdCmdObj = SDCommandLib.SdCommandClass(self.vtfContainer)
+        self.__errorCodes = ErrorCodes.ErrorCodes()
+        self.__cardMaxLba = self.__sdCmdObj.MaxLba()
+
+        self.__globalSetTOObj = globalSetTO.globalSetTO(self.vtfContainer)
+        self.__globalPreTestingSettingsObj = globalPreTestingSettings.globalPreTestingSettings(self.vtfContainer)
+        self.__globalSetLSHostFreqObj = globalSetLSHostFreq.globalSetLSHostFreq(self.vtfContainer)
+        self.__globalSetVoltObj = globalSetVolt.globalSetVolt(self.vtfContainer)
+        self.__globalSetBusMode = globalSetBusMode.GlobalSetBusMode(self.vtfContainer)
+        self.__globalInitSDCard = globalInitSDCard.globalInitSDCard(self.vtfContainer)
+        self.__globalSetSpeedMode = globalSetSpeedMode.globalSetSpeedMode(self.vtfContainer)
+
+        ###### Customize Log: ######
+        self.fn = os.path.basename(getframeinfo(currentframe()).filename)
+        customize_log.__init__(self, self.__TF)
+
+        ##### Testcase Specific Variables #####
+        self.__alreadyRead = False
+
+
+    def Run(self, globalProjectConfVar = None):
+        # Get the Global Project Configuration dictionary
+        if globalProjectConfVar == None:
+            globalProjectConfVar = self.__globalPreTestingSettingsObj.Run()
+
+        self.infoLog(self.fn, currentframe().f_lineno, sys._getframe().f_code.co_name, "Switch to Specify Card Type")
+
+        # Get the values from Project Configuration
+        globalSpeedMode = globalProjectConfVar["globalSpeedMode"]
+        globalBusMode = globalProjectConfVar["globalBusMode"]
+        globalOCRArgValue = globalProjectConfVar['globalOCRArgValue']
+        globalOCRResValue = globalProjectConfVar['globalOCRResValue']
+        self.debugLog(self.fn, currentframe().f_lineno, sys._getframe().f_code.co_name, "called ConfigSD_UT002_GlobalInitCard for Global Reset")
+
+        if globalProjectConfVar['globalPowerUp'] == 'powerCycle' or globalProjectConfVar['globalPowerUp'] == 'powerCycleNoCMD0':
+            self.debugLog(self.fn, currentframe().f_lineno, sys._getframe().f_code.co_name, "ConfigSD_UT002_GlobalInitCard, Power OFF and ON")
+            sdcmdWrap.SetPower(0)
+            sdcmdWrap.SetPower(1)
+
+            if (((globalSpeedMode == "SDR12") or (globalSpeedMode == "SDR25")
+              or  (globalSpeedMode == "SDR50") or (globalSpeedMode == "SDR104")
+              or (globalSpeedMode == "DDR50") or (globalSpeedMode == "DDR200") or (globalSpeedMode == "RandomSDR12_LS")
+              or (globalSpeedMode == "RandomSDR25_DDR50_HS")) and (globalSpeedMode != globalProjectConfVar['temp_globalSpeedMode'])):
+
+                globalSpeedMode = globalProjectConfVar['temp_globalSpeedMode']
+
+            if ((globalSpeedMode == "SDR12") or (globalSpeedMode == "SDR25")
+              or  (globalSpeedMode == "SDR50") or (globalSpeedMode == "SDR104")
+              or (globalSpeedMode == "DDR50") or (globalSpeedMode == "DDR200") or (globalSpeedMode == "RandomSDR12_LS")
+              or (globalSpeedMode == "RandomSDR25_DDR50_HS")):
+
+                globalBusMode = 'Four'
+                globalOCRArgValue = (globalOCRArgValue | 0x1000000)
+                globalOCRResValue = (globalOCRResValue | 0x1000000)
+
+            if (globalSpeedMode == "RandomSDR25_DDR50_HS"):
+                RANDOM_SPEED_MODE = random.randrange(0, 3)
+
+                if (RANDOM_SPEED_MODE == 0):
+                    globalSpeedMode = 'DDR50'
+                    globalBusMode = 'Four'
+                    globalOCRArgValue = (globalOCRArgValue | 0x1000000)
+                    globalOCRResValue = (globalOCRResValue | 0x1000000)
+
+                elif (RANDOM_SPEED_MODE == 1):
+                    globalSpeedMode = 'SDR25'
+                    globalBusMode = 'Four'
+                    globalOCRArgValue = (globalOCRArgValue | 0x1000000)
+                    globalOCRResValue = (globalOCRResValue | 0x1000000)
+
+                elif (RANDOM_SPEED_MODE == 2):
+                    globalSpeedMode = 'HS'
+                    globalBusMode = globalProjectConfVar['temp_globalBusMode']
+                    globalOCRArgValue = (globalOCRArgValue  & 0xFEFFFFFF)
+                    globalOCRResValue = (globalOCRResValue & 0xFEFFFFFF)
+
+                else:
+                    self.debugLog(self.fn, currentframe().f_lineno, sys._getframe().f_code.co_name, "In ConfigSD_UT002_GlobalInitCard file globalSpeedMode, globalBusMode, globalOCRArgValue and globalOCRResValue are set to default for RandomSDR25_DDR50_HS condition")
+
+            if (globalSpeedMode == "RandomSDR12_LS"):
+                RANDOM_SPEED_MODE = random.randrange(0, 2)
+
+                if (RANDOM_SPEED_MODE == 0):
+                    globalSpeedMode = 'SDR12'
+                    globalBusMode = 'Four'
+                    globalOCRArgValue = (globalOCRArgValue | 0x1000000)
+                    globalOCRResValue = (globalOCRResValue | 0x1000000)
+
+                elif (RANDOM_SPEED_MODE == 1):
+                    globalSpeedMode = 'LS'
+                    globalBusMode = globalProjectConfVar['temp_globalBusMode']
+                    globalOCRArgValue = (globalOCRArgValue & 0xFEFFFFFF)
+                    globalOCRResValue = (globalOCRResValue & 0xFEFFFFFF)
+
+                else:
+                    self.debugLog(self.fn, currentframe().f_lineno, sys._getframe().f_code.co_name, "In ConfigSD_UT002_GlobalInitCard file globalSpeedMode, globalBusMode, globalOCRArgValue and globalOCRResValue are set to default for RandomSDR12_LS condition")
+
+
+        if(globalProjectConfVar['globalPowerUp'] == 'softReset'):
+            globalOCRArgValue = (globalOCRArgValue & 0xFEFFFFFF)
+            globalOCRResValue = (globalOCRResValue & 0xFEFFFFFF)
+
+        # update the values to globalProjectConfVar dictionary
+        globalProjectConfVar['globalSpeedMode'] = globalSpeedMode
+        globalProjectConfVar['globalBusMode'] = globalBusMode
+        globalProjectConfVar['globalOCRArgValue'] = globalOCRArgValue
+        globalProjectConfVar['globalOCRResValue'] = globalOCRResValue
+
+        sdcmdWrap.SDRSetFrequency(300 * 1000)
+
+        # Call scripts globalSetLSHostFreq.st3, globalSetVolt.st3 and globalSetTO.st3
+        globalProjectConfVar['globalOCRArgValue'] = int(self.__config.get('globalOCRArgValue'))
+        globalProjectConfVar['globalOCRResValue'] = int(self.__config.get('globalOCRResValue'))
+        globalProjectConfVar['globalVOLAValue'] = 1
+
+        #self.__globalSetLSHostFreqObj.Run()
+        self.__globalSetVoltObj.Run(globalProjectConfVar)
+        self.__globalSetTOObj.Run()
+
+        if globalProjectConfVar['globalCardType'] == 'SD':
+            self.__globalInitSDCard.Run(globalProjectConfVar)
+
+        if((globalProjectConfVar['globalCardType'] == 'SD') and (globalProjectConfVar['globalProtocolMode'] == 'SD')):
+            self.__dvtLib.Identification()
+
+        self.__globalSetLSHostFreqObj.Run()
+
+        if((globalProjectConfVar['globalCardType'] == 'SD')):
+            CSD_Reg_Values = self.__sdCmdObj.GET_CSD_VALUES()
+
+            if((globalProjectConfVar['globalProtocolMode'] == 'SD')):
+                self.__sdCmdObj.Cmd7()
+                SCR_Reg_Values = self.__dvtLib.GET_SCR_Reg_Values()
+
+        # call globalSetBusMode.st3
+        self.__globalSetBusMode.Run(globalProjectConfVar)
+
+        # Call globalSetSpeedMode.st3
+        self.__globalSetSpeedMode.Run(globalProjectConfVar = globalProjectConfVar)
+
+        if self.__alreadyRead == False:     # allow for only first time read
+            sdstatus = self.__dvtLib.GetSDStatus()
+            self.__alreadyRead = True
+
+        self.infoLog(self.fn, currentframe().f_lineno, sys._getframe().f_code.co_name, "Switch to Specify Card Type Completed\n\n")
+        return globalProjectConfVar

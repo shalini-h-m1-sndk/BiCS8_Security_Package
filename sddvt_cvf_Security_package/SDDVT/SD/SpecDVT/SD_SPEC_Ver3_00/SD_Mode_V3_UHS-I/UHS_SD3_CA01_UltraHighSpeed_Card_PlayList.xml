@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--To know more about playlists refer - https://confluence.wdc.com/display/SSDFW/VTF+User+Guide#VTFUserGuide-_Toc60832124-->
+<Playlists xmlns="vtfSchema">
+    <Playlist name="UHS_SD3_CA01_UltraHighSpeed_Card" directTestMode="true" runOnce="true">
+        <Steps>1</Steps>
+        <TestRef testName="UHS_SD3_TC001_Reset_Main_Flow" />
+        <TestRef testName="UHS_SD3_TC002_CMD8_Mandatory" />
+        <TestRef testName="UHS_SD3_TC003_CMD11_State_Test" />
+        <TestRef testName="UHS_SD3_TC004_CMD19_State_Test" />
+        <TestRef testName="UHS_SD3_TC005_Init_Error_Test" />
+        <TestRef testName="UHS_SD3_TC006_UHSModes_Random_Test_Overcurrent" />
+        <TestRef testName="UHS_SD3_TC007_Reset_RandomTest" />
+    </Playlist>
+</Playlists>

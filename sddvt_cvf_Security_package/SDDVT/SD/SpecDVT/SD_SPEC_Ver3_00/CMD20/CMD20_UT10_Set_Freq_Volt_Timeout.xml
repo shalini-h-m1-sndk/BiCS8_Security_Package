@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tests xmlns="vtfSchema">
+
+<Test name="test_CMD20_UT10_Set_Freq_Volt_Timeout">
+<!--<TestCondition testName="PreConditionTests.PreconditionTests.FormatDrive"  family="PRECONDITION" />
+<TestCondition testName="PreConditionTests.PreconditionTests.FormatDrive"  family="POSTCONDITION" />-->
+
+<Default>
+<TestVariables>
+<!-- TESTCASE_VARIABLES: START  -->
+<Int32 name="startlba">0</Int32>
+<Int32 name="blockcount">65535</Int32>
+<Int32 name="lbaalignment">1</Int32>
+<Int32 name="transferlength">256</Int32>
+<Int32 name="writetimeout">20000</Int32>
+<Int32 name="readtimeout">20000</Int32>
+<Int32 name="commandcount">100</Int32>
+<Int32 name="testloop">1</Int32>
+
+<!--# Customized Log Level -->
+<Bool name="fatal">true</Bool>
+<Bool name="err">true</Bool>
+<Bool name="warn">false</Bool>
+<Bool name="info">true</Bool>
+<Bool name="dbg">false</Bool>
+<Bool name="noise">false</Bool>
+<Bool name="with_fn">true</Bool>
+<Bool name="with_ln">true</Bool>
+<Bool name="with_func">true</Bool>
+<!-- TESTCASE_VARIABLES: END  -->
+
+<!-- TEMP_SUPPORT: START : The below variables will be removed when CVF Commandline support is given -->
+<Int32 name="cq">0</Int32>
+<Int32 name="lv">0</Int32>
+<String name="sdconfiguration">SDR104</String>
+<Int32 name="Freq">200</Int32>
+<!-- TEMP_SUPPORT: END -->
+
+</TestVariables>
+
+</Default>
+
+<Variation name="Variation 1" skip="false">
+<TestVariablesOverride>
+<Int32 name="startlba">0</Int32>
+<Int32 name="transferlength">256</Int32>
+</TestVariablesOverride>
+</Variation>
+
+</Test>
+</Tests>

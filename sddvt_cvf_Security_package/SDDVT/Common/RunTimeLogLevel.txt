@@ -1,0 +1,9 @@
+fatal=True
+err=True
+warn=True
+info=True
+dbg=False
+noise=False
+with_fn=True
+with_ln=True
+with_func=True

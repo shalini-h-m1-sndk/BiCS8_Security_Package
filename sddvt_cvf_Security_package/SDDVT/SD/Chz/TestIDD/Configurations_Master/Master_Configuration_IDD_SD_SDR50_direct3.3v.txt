@@ -1,0 +1,122 @@
+// var types:  (0) bit    (1) signed long    (2) real   (3) string   (4) buffer     (5) unsigned long
+
+/////////////////////////////////
+//  IDD Measurement Variables  //
+/////////////////////////////////
+
+IDD_StartAddress(5)=0
+IDD_Blocks(5)=4194304
+IDD_Samples(5)=100
+IDD_InitTimeout(5)=750
+IDD_ReadTimeout(5)=100
+IDD_WriteTimeout(5)=1000
+
+// IDD_Frequency
+// ---------------------
+// Units in KHz
+IDD_Frequency(5)=100000
+
+
+// IDD_CardType
+// ---------------------
+// SD
+// MMC
+IDD_CardType(3)=SD
+
+
+// IDD_BusWidth
+// ---------------------
+// 0 = 1bit
+// 2 = 4bit
+// 3 = 8bit
+IDD_BusWidth(1)=2
+
+
+// IDD_Lightning
+// ---------------------
+// 0 = No
+// 1 = Yes
+IDD_Lightning(0)=0
+
+
+// IDD_Pattern
+// ---------------------
+// 0 = ALL_ZERO
+// 1 = WORD_REPEATED
+// 2 = INCREMENTAL
+// 3 = ANY_BUFFER
+// 4 = CONST
+// 5 = ALL_ONE
+// 6 = ANY_WORD
+// 7 = WORD_BLOCK_NUMBER
+IDD_Pattern(5)=6
+IDD_AnyWord(5)=43605
+
+
+// IDD_MeasureVddf
+// ---------------------
+// 0 = No
+// 1 = Yes
+IDD_MeasureVddf(0)=0
+
+
+// IDD_PreSleepExe
+// ---------------------
+// 0 = Reset
+// 1 = Read
+// 2 = Multiple Read
+// 3 = Write
+// 4 = Multiple Write
+IDD_PreSleepExe(5)=0
+
+
+// IDD_DeepSleep
+// ---------------------
+// 0 = Don't perform Deep Sleep
+// 1 = Perform Deep Sleep
+IDD_DeepSleep(0)=0
+
+
+// IDD_ModeSpi
+// ---------------------
+// 0 = MMC
+// 1 = MMC in SPI
+// 2 = SD
+// 3 = SD in SPI
+IDD_ModeSpi(5)=2
+
+// IDD_ActiveSampleRate
+// --------------------
+// 0 = ONE_MS
+// 1 = TWO_MS
+// 2 = FOUR_MS
+// 3 = EIGHT_MS
+// 4 = SIXTEEN_MS
+// 5 = THIRTY_TWO_MS
+// 6 = SIXTY_FOUR_MS
+// 7 = ONE_HUNDRED_TWENTY_EIGHT_MS
+IDD_ActiveSampleRate(5)=4
+
+
+// The next values represent the requested voltage in milli-volts divided by 50.
+// For example, if the requested voltage is 3.3v (=3300 in milli-volts) the value should be 66 (3300 / 50).
+// Some more examples: 2.7v => 2700mv => 54; 3v => 3000mv => 60 etc.
+VDDH_MilliVoltages(4)={66, 255}
+VDDF_MilliVoltages(4)={66, 255}
+
+// in sdxc settings  1==>enable ; 0==>disable
+XPC_enable(0) = 1
+
+//value for set hi speed directive
+// 0==> LS   ;  1==> HS  ; 2==> SDR50  ; 3==> SDR104  ; 4==> DDR50
+globalSpeedMode_Value(5) = 2
+
+//value for UHS card current limit
+// 0==> 200mA    ;  1==>  400mA  ; 2==>  600mA ; 3==> 800   ; 15==>  No change
+UHSCurrentLimit(5)=1
+
+// VDDH_Max_current must be 400mlA for SDR50
+VDDH_Max_current(5)=400
+
+// 1==>enable 0==>disable
+SendCmd11_in_Init(0)=1

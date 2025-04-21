@@ -1,0 +1,59 @@
+// var types:  (0) bit    (1) signed long    (2) real   (3) string   (4) buffer     (5) unsigned long
+
+//TimeOut value for read
+Read_TO(5)=100
+
+//TimeOut value for reset
+Init_TO(5)=1000
+
+//TimeOut value for busy
+Write_TO(5)=250
+
+//maximal readout volatage
+max_voltage(5)=3600
+
+//minimal readout volatage
+min_voltage(5)=2700
+
+//ClockRatevalue - changed to be Frequancy
+Freq(5)=150000
+
+//Read Style
+READ(3)=MultipleRead
+
+//Write Style
+WRITE(3)=MultipleWrite
+
+// Perform only read operations
+ReadOnly(0)=0
+
+//Number of Loops for test procedure e.g. "forever"
+LoopsCounter(5)= -1
+
+//bus_width  value 1 is N/A
+//bus_width 0--> bus width 1!     2-->bus width 4!      3-->bus width 8!
+bus_width(5) = 2
+
+// in sdxc settings  1==>enable ; 0==>disable
+XPC_enable(0) = 1
+
+// enable latency 1=true 0=false
+Latency_Enable(0)=1
+
+//value for set speed directive
+// 0==> LS   ;  1==> HS  ; 2==> SDR50  ; 3==> SDR104  ; 4==> DDR50
+globalSpeedMode_Value(5) = 3
+
+//value for UHS card current limit
+// 0==> 200mA    ;  1==>  400mA  ; 2==>  600mA ; 3==> 800   ; 15==>  No change
+UHSCurrentLimit(5)=1
+
+// in UHS settings  1==>enable ; 0==>disable
+SendCmd11_in_Init(0)=1
+
+// VDDH_Max_current must be 400mlA for SDR50
+VDDH_Max_current(5)=400
+
+//value for init directory selection
+// 0==> LS   ;  1==> HS-SD  ; 2==> HS-75-lightning  ; 3==> HS-eMMC  ; 4==> SD-UHSI
+InitMode_Value(5) = 4
